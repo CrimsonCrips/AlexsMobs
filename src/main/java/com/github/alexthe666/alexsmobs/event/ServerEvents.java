@@ -503,6 +503,7 @@ public class ServerEvents {
                         }
                         elephant.addElephantLoot(null, RAND.nextInt());
                     }
+
                 }
             }
         }
