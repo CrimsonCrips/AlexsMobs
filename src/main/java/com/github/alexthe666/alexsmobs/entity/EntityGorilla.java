@@ -147,8 +147,7 @@ public class EntityGorilla extends TamableAnimal implements IAnimatedEntity, ITa
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new SitWhenOrderedToGoal(this));
-        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.2D, true));
-        this.goalSelector.addGoal(2, new GorillaAIFollowCaravan(this, 0.8D));
+        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.2D, false));
         this.goalSelector.addGoal(3, new GorillaAIChargeLooker(this, 1.6D));
         this.goalSelector.addGoal(4, new TameableAITempt(this, 1.1D, Ingredient.of(AMTagRegistry.GORILLA_TAMEABLES), false));
         this.goalSelector.addGoal(4, new AnimalAIRideParent(this, 1.25D));

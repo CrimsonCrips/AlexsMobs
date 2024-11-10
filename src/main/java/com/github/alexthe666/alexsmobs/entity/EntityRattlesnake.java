@@ -34,6 +34,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -62,7 +63,7 @@ public class EntityRattlesnake extends Animal implements IAnimatedEntity {
 
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.2D, true));
+        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.2D, false));
         this.goalSelector.addGoal(2, new WarnPredatorsGoal());
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.1D));
@@ -242,45 +243,54 @@ public class EntityRattlesnake extends Animal implements IAnimatedEntity {
 
     class WarnPredatorsGoal extends Goal {
         int executionChance = 20;
-        Entity target = null;
+        LivingEntity target = null;
 
-        @Override
+        private static final Predicate<LivingEntity> WARNABLE_PREDICATE = (mob) -> {
+            return mob instanceof Player && !((Player) mob).isCreative() && !mob.isSpectator() || mob instanceof EntityRoadrunner || mob instanceof EntityRattlesnake;
+        };
+
+        public WarnPredatorsGoal() {
+        }
+
         public boolean canUse() {
-            if(EntityRattlesnake.this.getRandom().nextInt(executionChance) == 0){
-                final double dist = 5D;
-                List<LivingEntity> list = EntityRattlesnake.this.level().getEntitiesOfClass(LivingEntity.class, EntityRattlesnake.this.getBoundingBox().inflate(dist, dist, dist), WARNABLE_PREDICATE);
-                double d0 = Double.MAX_VALUE;
-                Entity possibleTarget = null;
-                for(Entity entity : list) {
-                    double d1 = EntityRattlesnake.this.distanceToSqr(entity);
-                    if (!(d1 > d0)) {
-                        d0 = d1;
-                        possibleTarget = entity;
-                    }
+            List<LivingEntity> list = EntityRattlesnake.this.level().getEntitiesOfClass(LivingEntity.class, EntityRattlesnake.this.getBoundingBox().inflate(5.0, 5.0, 5.0), WARNABLE_PREDICATE);
+            double d0 = Double.MAX_VALUE;
+            Entity possibleTarget = null;
+            Iterator<LivingEntity> var7 = list.iterator();
+
+            while(var7.hasNext()) {
+
+                Entity entity = var7.next();
+                double d1 = EntityRattlesnake.this.distanceToSqr(entity);
+                if (!(d1 > d0) && entity != EntityRattlesnake.this) {
+                    d0 = d1;
+                    possibleTarget = entity;
                 }
-                target = possibleTarget;
-                return !list.isEmpty();
+
             }
-            return false;
+
+            this.target = (LivingEntity) possibleTarget;
+            return !list.isEmpty();
+
         }
 
-        @Override
-        public boolean canContinueToUse(){
-            return target != null && EntityRattlesnake.this.distanceTo(target) < 5D && EntityRattlesnake.this.getTarget() == null;
+        public boolean canContinueToUse() {
+            return this.target != null && (double)EntityRattlesnake.this.distanceTo(this.target) < 5.0 && EntityRattlesnake.this.getTarget() == null;
         }
 
-        @Override
         public void stop() {
-            target = null;
+            this.target = null;
             EntityRattlesnake.this.setRattling(false);
         }
 
-        @Override
-        public void tick(){
+        public void tick() {
+            System.out.println("its working");
             EntityRattlesnake.this.setRattling(true);
             EntityRattlesnake.this.setCurled(true);
             EntityRattlesnake.this.curlTime = 0;
-            EntityRattlesnake.this.getLookControl().setLookAt(target, 30, 30);
+            if (target != null){
+                EntityRattlesnake.this.getLookControl().setLookAt(this.target, 30.0F, 30.0F);
+            }
         }
     }
 

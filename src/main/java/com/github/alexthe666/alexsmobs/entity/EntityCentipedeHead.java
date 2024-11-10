@@ -170,7 +170,7 @@ public class EntityCentipedeHead extends Monster {
 
     @Nullable
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
-        this.setSegmentCount(random.nextInt(4) + 5);
+        this.setSegmentCount(random.nextInt(4) + 100);
         return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
