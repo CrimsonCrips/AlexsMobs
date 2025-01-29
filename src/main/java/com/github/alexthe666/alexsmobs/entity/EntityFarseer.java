@@ -176,9 +176,4 @@ public class EntityFarseer extends Entity implements IAnimatedEntity {
         return 1.0F;
     }
 
-
-    public boolean isEffectiveAi() {
-        return true;
-    }
-
 }
