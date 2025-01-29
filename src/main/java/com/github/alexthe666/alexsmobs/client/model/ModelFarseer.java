@@ -12,15 +12,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 
 public class ModelFarseer extends AdvancedEntityModel<EntityFarseer> {
-    public final AdvancedModelBox eye;
     private final AdvancedModelBox root;
-    private final AdvancedModelBox bodyCube1;
-    private final AdvancedModelBox head;
-    private final AdvancedModelBox leftUpperMask;
-    private final AdvancedModelBox rightUpperMask;
-    private final AdvancedModelBox leftLowerMask;
-    private final AdvancedModelBox rightLowerMask;
-    private final AdvancedModelBox bodyCube2;
+
     private final AdvancedModelBox leftArm;
     private final AdvancedModelBox leftElbow;
     private final AdvancedModelBox leftHand;
@@ -49,6 +42,7 @@ public class ModelFarseer extends AdvancedEntityModel<EntityFarseer> {
     private final AdvancedModelBox rightLowerRFinger3;
     private final AdvancedModelBox rightLowerLFinger2;
     private final AdvancedModelBox rightUpperLFinger2;
+
     private final ModelAnimator animator;
 
     public ModelFarseer(float scale) {
@@ -57,47 +51,6 @@ public class ModelFarseer extends AdvancedEntityModel<EntityFarseer> {
 
         root = new AdvancedModelBox(this, "root");
         root.setRotationPoint(0.0F, 24.0F, 0.0F);
-
-
-        bodyCube1 = new AdvancedModelBox(this, "bodyCube1");
-        bodyCube1.setRotationPoint(2.0F, -8.0F, 0.0F);
-        root.addChild(bodyCube1);
-        bodyCube1.setTextureOffset(0, 56).addBox(-5.0F, -2.0F, -3.0F, 10.0F, 4.0F, 5.0F, scale, false);
-
-        head = new AdvancedModelBox(this, "head");
-        head.setRotationPoint(0.0F, -15.0F, 0.0F);
-        root.addChild(head);
-        head.setTextureOffset(0, 0).addBox(-10.5F, -5.0F, -6.0F, 21.0F, 9.0F, 13.0F, scale, false);
-
-        leftUpperMask = new AdvancedModelBox(this, "leftUpperMask");
-        leftUpperMask.setRotationPoint(0.0F, -5.0F, 1.0F);
-        head.addChild(leftUpperMask);
-        leftUpperMask.setTextureOffset(0, 23).addBox(0.0F, -0.5F, -7.9F, 11.0F, 7.0F, 8.0F, scale, false);
-
-        rightUpperMask = new AdvancedModelBox(this, "rightUpperMask");
-        rightUpperMask.setRotationPoint(0.0F, -5.0F, 1.0F);
-        head.addChild(rightUpperMask);
-        rightUpperMask.setTextureOffset(0, 23).addBox(-11.0F, -0.5F, -7.9F, 11.0F, 7.0F, 8.0F, scale, true);
-
-        leftLowerMask = new AdvancedModelBox(this, "leftLowerMask");
-        leftLowerMask.setRotationPoint(0.0F, 3.0F, 1.0F);
-        head.addChild(leftLowerMask);
-        leftLowerMask.setTextureOffset(31, 31).addBox(0.0F, -2.5F, -7.9F, 11.0F, 4.0F, 8.0F, scale, false);
-
-        rightLowerMask = new AdvancedModelBox(this, "rightLowerMask");
-        rightLowerMask.setRotationPoint(0.0F, 3.0F, 1.0F);
-        head.addChild(rightLowerMask);
-        rightLowerMask.setTextureOffset(31, 31).addBox(-11.0F, -2.5F, -7.9F, 11.0F, 4.0F, 8.0F, scale, true);
-
-        eye = new AdvancedModelBox(this, "eye");
-        eye.setRotationPoint(0.0F, 4.0F, -1.0F);
-        head.addChild(eye);
-        eye.setTextureOffset(56, 0).addBox(-4.5F, -8.0F, -6.0F, 9.0F, 4.0F, 2.0F, scale, false);
-
-        bodyCube2 = new AdvancedModelBox(this, "bodyCube2");
-        bodyCube2.setRotationPoint(1.0F, -2.0F, 1.0F);
-        root.addChild(bodyCube2);
-        bodyCube2.setTextureOffset(33, 44).addBox(-6.0F, -3.0F, -3.0F, 10.0F, 5.0F, 6.0F, scale, false);
 
         leftArm = new AdvancedModelBox(this, "leftArm");
         leftArm.setRotationPoint(9.0F, -16.5F, 9.0F);
@@ -262,6 +215,7 @@ public class ModelFarseer extends AdvancedEntityModel<EntityFarseer> {
         animator = ModelAnimator.create();
     }
 
+
     public void animate(IAnimatedEntity entity, float f, float f1, float f2, float f3, float f4) {
         animator.update(entity);
         animator.setAnimation(EntityFarseer.ANIMATION_EMERGE);
@@ -346,110 +300,10 @@ public class ModelFarseer extends AdvancedEntityModel<EntityFarseer> {
     }
 
 
+
     @Override
     public void setupAnim(EntityFarseer entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.resetToDefaultPose();
-        animate(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-        float partialTick = ageInTicks - entity.tickCount;
-        float idleSpeed = 0.15F;
-        float invPortalDegree = 1F - entity.getFacingCameraAmount(partialTick);
-        float idleDegree = invPortalDegree;
-        float angryProgress = entity.prevAngryProgress + (entity.angryProgress - entity.prevAngryProgress) * partialTick;
-        float strike1Progress = (entity.prevStrikeProgress[0] + (entity.strikeProgress[0] - entity.prevStrikeProgress[0]) * partialTick) * invPortalDegree;
-        float strike2Progress = (entity.prevStrikeProgress[1] + (entity.strikeProgress[1] - entity.prevStrikeProgress[1]) * partialTick) * invPortalDegree;
-        float strike3Progress = (entity.prevStrikeProgress[2] + (entity.strikeProgress[2] - entity.prevStrikeProgress[2]) * partialTick) * invPortalDegree;
-        float strike4Progress = (entity.prevStrikeProgress[3] + (entity.strikeProgress[3] - entity.prevStrikeProgress[3]) * partialTick) * invPortalDegree;
-        float clasp1Progress = Math.max(strike1Progress, (entity.prevClaspProgress[0] + (entity.claspProgress[0] - entity.prevClaspProgress[0]) * partialTick) * invPortalDegree);
-        float clasp2Progress = Math.max(strike2Progress, (entity.prevClaspProgress[1] + (entity.claspProgress[1] - entity.prevClaspProgress[1]) * partialTick) * invPortalDegree);
-        float clasp3Progress = Math.max(strike3Progress, (entity.prevClaspProgress[2] + (entity.claspProgress[2] - entity.prevClaspProgress[2]) * partialTick) * invPortalDegree);
-        float clasp4Progress = Math.max(strike4Progress, (entity.prevClaspProgress[3] + (entity.claspProgress[3] - entity.prevClaspProgress[3]) * partialTick) * invPortalDegree);
-        float armYaw = Maths.rad(entity.getLatencyVar(5, 3, partialTick) - entity.getLatencyVar(0, 3, partialTick));
-        Vec3 topArmOffset = entity.getLatencyOffsetVec(4, partialTick).scale(-4.0F);
-        Vec3 bottomArmOffset = entity.getLatencyOffsetVec(8, partialTick).scale(-5.0F);
-        Vec3 body1Offset = entity.getLatencyOffsetVec(8, partialTick).scale(-3.0F);
-        Vec3 body2Offset = entity.getLatencyOffsetVec(12, partialTick).scale(-5.0F);
-        Vec3 angryShake = entity.angryShakeVec.scale(angryProgress * 0.1F);
-        progressRotationPrev(rightUpperMask, angryProgress, Maths.rad(-35), Maths.rad(13), 0, 5F);
-        progressRotationPrev(leftUpperMask, angryProgress, Maths.rad(-35), Maths.rad(-13), 0, 5F);
-        progressRotationPrev(rightLowerMask, angryProgress, Maths.rad(35), Maths.rad(13), 0, 5F);
-        progressRotationPrev(leftLowerMask, angryProgress, Maths.rad(35), Maths.rad(-13), 0, 5F);
-        progressPositionPrev(bodyCube1, angryProgress, 0, 0, 4, 5F);
-        progressPositionPrev(bodyCube2, angryProgress, 0, 0, 2, 5F);
-
-        progressRotationPrev(leftUpperRFinger, clasp1Progress, Maths.rad(45), 0, 0, 5F);
-        progressRotationPrev(leftLowerRFinger, clasp1Progress, Maths.rad(45), 0, 0, 5F);
-        progressRotationPrev(leftLowerLFinger, clasp1Progress, Maths.rad(45), 0, 0, 5F);
-        progressRotationPrev(leftUpperLFinger, clasp1Progress, Maths.rad(45), 0, 0, 5F);
-        progressRotationPrev(rightUpperRFinger, clasp2Progress, Maths.rad(45), 0, 0, 5F);
-        progressRotationPrev(rightLowerRFinger2, clasp2Progress, Maths.rad(45), 0, 0, 5F);
-        progressRotationPrev(rightLowerLFinger, clasp2Progress, Maths.rad(45), 0, 0, 5F);
-        progressRotationPrev(rightUpperLFinger, clasp2Progress, Maths.rad(45), 0, 0, 5F);
-        progressRotationPrev(leftUpperRFinger2, clasp3Progress, Maths.rad(45), 0, 0, 5F);
-        progressRotationPrev(leftLowerRFinger2, clasp3Progress, Maths.rad(45), 0, 0, 5F);
-        progressRotationPrev(leftLowerLFinger2, clasp3Progress, Maths.rad(45), 0, 0, 5F);
-        progressRotationPrev(leftUpperLFinger2, clasp3Progress, Maths.rad(45), 0, 0, 5F);
-        progressRotationPrev(rightUpperRFinger2, clasp4Progress, Maths.rad(45), 0, 0, 5F);
-        progressRotationPrev(rightLowerRFinger3, clasp4Progress, Maths.rad(45), 0, 0, 5F);
-        progressRotationPrev(rightLowerLFinger2, clasp4Progress, Maths.rad(45), 0, 0, 5F);
-        progressRotationPrev(rightUpperLFinger2, clasp4Progress, Maths.rad(45), 0, 0, 5F);
-        progressPositionPrev(leftArm, strike1Progress, 4, -4, -9, 5F);
-        progressRotationPrev(leftArm, strike1Progress, 0, Maths.rad(90), 0, 5F);
-        progressRotationPrev(leftElbow, strike1Progress, 0, Maths.rad(-70), 0, 5F);
-        progressRotationPrev(leftHand, strike1Progress, 0, Maths.rad(-10), 0, 5F);
-        progressPositionPrev(rightArm, strike2Progress, -4, -4, -9, 5F);
-        progressRotationPrev(rightArm, strike2Progress, 0, Maths.rad(-90), 0, 5F);
-        progressRotationPrev(rightElbow, strike2Progress, 0, Maths.rad(70), 0, 5F);
-        progressRotationPrev(rightHand, strike2Progress, 0, Maths.rad(10), 0, 5F);
-        progressPositionPrev(leftArm2, strike3Progress, 6, 4, -9, 5F);
-        progressRotationPrev(leftArm2, strike3Progress, 0, Maths.rad(90), 0, 5F);
-        progressRotationPrev(leftElbow2, strike3Progress, 0, Maths.rad(-70), 0, 5F);
-        progressRotationPrev(leftHand2, strike3Progress, 0, Maths.rad(-10), 0, 5F);
-        progressPositionPrev(rightArm2, strike4Progress, -6, 4, -9, 5F);
-        progressRotationPrev(rightArm2, strike4Progress, 0, Maths.rad(-90), 0, 5F);
-        progressRotationPrev(rightElbow2, strike4Progress, 0, Maths.rad(70), 0, 5F);
-        progressRotationPrev(rightHand2, strike4Progress, 0, Maths.rad(10), 0, 5F);
-
-        leftArm.rotationPointX += (topArmOffset.x + Math.sin(ageInTicks * idleSpeed + 1.3F)) * idleDegree;
-        leftArm.rotationPointY += (topArmOffset.y + Math.sin(ageInTicks * idleSpeed + 1.6F)) * idleDegree;
-        leftArm.rotationPointZ += (topArmOffset.z + Math.cos(ageInTicks * idleSpeed + 1.9F)) * idleDegree;
-        leftArm.rotateAngleY += armYaw;
-        leftArm2.rotationPointX += (bottomArmOffset.x + Math.sin(ageInTicks * idleSpeed + 2.3F)) * idleDegree;
-        leftArm2.rotationPointY += (bottomArmOffset.y + Math.sin(ageInTicks * idleSpeed + 2.6F)) * idleDegree;
-        leftArm2.rotationPointZ += (bottomArmOffset.z + Math.cos(ageInTicks * idleSpeed + 2.9F)) * idleDegree;
-        leftArm2.rotateAngleY += armYaw;
-        rightArm.rotationPointX += (topArmOffset.x + Math.sin(ageInTicks * idleSpeed + 3.3F)) * idleDegree;
-        rightArm.rotationPointY += (topArmOffset.y + Math.sin(ageInTicks * idleSpeed + 3.6F)) * idleDegree;
-        rightArm.rotationPointZ += (topArmOffset.z + Math.cos(ageInTicks * idleSpeed + 3.9F)) * idleDegree;
-        rightArm.rotateAngleY += armYaw;
-        rightArm2.rotationPointX += (bottomArmOffset.x + Math.sin(ageInTicks * idleSpeed + 4.3F)) * idleDegree;
-        rightArm2.rotationPointY += (bottomArmOffset.y + Math.sin(ageInTicks * idleSpeed + 4.6F)) * idleDegree;
-        rightArm2.rotationPointZ += (bottomArmOffset.z + Math.cos(ageInTicks * idleSpeed + 4.9F)) * idleDegree;
-        rightArm2.rotateAngleY += armYaw;
-        bodyCube1.rotationPointX += (body1Offset.x + Math.sin(ageInTicks * idleSpeed + 7.3F)) * idleDegree;
-        bodyCube1.rotationPointY += (body1Offset.y + Math.sin(ageInTicks * idleSpeed + 7.6F)) * idleDegree;
-        bodyCube1.rotationPointZ += (body1Offset.z + Math.cos(ageInTicks * idleSpeed + 7.9F)) * idleDegree;
-        bodyCube2.rotationPointX += (body2Offset.x + Math.sin(ageInTicks * idleSpeed + 5.3F)) * idleDegree;
-        bodyCube2.rotationPointY += (body2Offset.y + Math.sin(ageInTicks * idleSpeed + 5.6F)) * idleDegree;
-        bodyCube2.rotationPointZ += (body2Offset.z + Math.cos(ageInTicks * idleSpeed + 5.9F)) * idleDegree;
-        head.rotationPointX += angryShake.x;
-        head.rotationPointY += angryShake.y;
-        head.rotationPointZ += angryShake.z;
-
-        this.bob(root, idleSpeed, idleDegree, false, ageInTicks, 1);
-        this.swing(leftArm, idleSpeed, idleDegree * 0.2F, true, 1, 0F, ageInTicks, 1);
-        this.swing(rightArm, idleSpeed, idleDegree * 0.2F, false, 2, 0F, ageInTicks, 1);
-        this.swing(leftArm2, idleSpeed, idleDegree * 0.2F, true, 3, 0F, ageInTicks, 1);
-        this.swing(rightArm2, idleSpeed, idleDegree * 0.2F, false, 4, 0F, ageInTicks, 1);
-        this.walk(leftUpperMask, idleSpeed * 8, 0.05F, true, 1, 0.2F, ageInTicks, angryProgress * 0.2F);
-        this.walk(rightUpperMask, idleSpeed * 8, 0.05F, true, 2, 0.2F, ageInTicks, angryProgress * 0.2F);
-        this.walk(rightLowerMask, idleSpeed * 8, 0.05F, false, 3, 0.2F, ageInTicks, angryProgress * 0.2F);
-        this.walk(leftLowerMask, idleSpeed * 8, 0.05F, false, 4, 0.2F, ageInTicks, angryProgress * 0.2F);
-        float headY = netHeadYaw * invPortalDegree * Mth.DEG_TO_RAD;
-        float headZ = headPitch * invPortalDegree * Mth.DEG_TO_RAD;
-        this.head.rotateAngleY += headY;
-        this.head.rotateAngleX += headZ;
-
-
     }
 
 
@@ -460,7 +314,7 @@ public class ModelFarseer extends AdvancedEntityModel<EntityFarseer> {
 
     @Override
     public Iterable<AdvancedModelBox> getAllParts() {
-        return ImmutableList.of(root, bodyCube1, head, leftUpperMask, rightUpperMask, leftLowerMask, rightLowerMask, eye, bodyCube2, leftArm, leftElbow, leftHand, leftUpperRFinger, leftLowerRFinger, leftLowerLFinger, leftUpperLFinger, leftArm2, leftElbow2, leftHand2, leftUpperRFinger2, leftLowerRFinger2, leftLowerLFinger2, leftUpperLFinger2, rightArm, rightElbow, rightHand, rightUpperRFinger, rightLowerRFinger2, rightLowerLFinger, rightUpperLFinger, rightArm2, rightElbow2, rightHand2, rightUpperRFinger2, rightLowerRFinger3, rightLowerLFinger2, rightUpperLFinger2);
+        return ImmutableList.of(root, leftArm, leftElbow, leftHand, leftUpperRFinger, leftLowerRFinger, leftLowerLFinger, leftUpperLFinger, leftArm2, leftElbow2, leftHand2, leftUpperRFinger2, leftLowerRFinger2, leftLowerLFinger2, leftUpperLFinger2, rightArm, rightElbow, rightHand, rightUpperRFinger, rightLowerRFinger2, rightLowerLFinger, rightUpperLFinger, rightArm2, rightElbow2, rightHand2, rightUpperRFinger2, rightLowerRFinger3, rightLowerLFinger2, rightUpperLFinger2);
     }
 
     public void setRotationAngle(AdvancedModelBox advancedModelBox, float x, float y, float z) {
