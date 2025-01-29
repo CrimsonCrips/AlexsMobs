@@ -100,9 +100,24 @@ public class EntityFarseer extends Entity implements IAnimatedEntity {
 
         System.out.println(getAnimationTick());
 
-        if (this.hasEmerged() && getAnimation() == ANIMATION_EMERGE && this.getAnimationTick() < 50){
-            this.setAnimationTick(getAnimationTick() + 1);
+        if (getAnimation() == ANIMATION_EMERGE){
+            if (this.hasEmerged() && this.getAnimationTick() < 50){
+                this.setAnimationTick(getAnimationTick() + 1);
+            } else if (this.getAnimationTick() >= 50){
+                this.setInvisible(true);
+            }
+
+            Level level = this.level();
+            if(level.isClientSide){
+                level.addParticle(AMParticleRegistry.STATIC_SPARK.get(), this.getRandomX(0.75F), this.getRandomY(), this.getRandomZ(0.75F), (level.getRandom().nextFloat() - 0.5F) * 0.2F, level.getRandom().nextFloat() * 0.2F, (level.getRandom().nextFloat() - 0.5F) * 0.2F);
+            }
+            if(this.getAnimationTick() == 1){
+                this.playSound(AMSoundRegistry.FARSEER_EMERGE.get(), 1, 1);
+            }
         }
+
+
+
 
     }
 
@@ -140,12 +155,12 @@ public class EntityFarseer extends Entity implements IAnimatedEntity {
                 return 1;
             } else if (this.getAnimationTick() < 30) {
                 return 2;
-            } else if (this.getAnimationTick() > 40 && false) {
-                int i = 50 - this.getAnimationTick();
-                return i < 6 ? i < 3 ? 0 : 1 : 2;
+            } else if (this.getAnimationTick() > 40 && hasEmerged()) {
+                return 40;
             }
         }
-        return 40;
+        int i = 50 - this.getAnimationTick();
+        return i < 6 ? i < 3 ? 0 : 1 : 2;
     }
 
 
