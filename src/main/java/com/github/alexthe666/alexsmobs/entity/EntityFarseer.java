@@ -53,8 +53,6 @@ public class EntityFarseer extends Entity implements IAnimatedEntity {
 
     public static final Animation ANIMATION_EMERGE = Animation.create(50);
     private static final EntityDataAccessor<Boolean> HAS_EMERGED = SynchedEntityData.defineId(EntityFarseer.class, EntityDataSerializers.BOOLEAN);
-    private float faceCameraProgress;
-    private float prevFaceCameraProgress;
     private int animationTick;
     private Animation currentAnimation;
 
@@ -102,7 +100,7 @@ public class EntityFarseer extends Entity implements IAnimatedEntity {
 
         System.out.println(getAnimationTick());
 
-        if (this.hasEmerged() && getAnimation() == ANIMATION_EMERGE && this.getAnimationTick() < 40){
+        if (this.hasEmerged() && getAnimation() == ANIMATION_EMERGE && this.getAnimationTick() < 50){
             this.setAnimationTick(getAnimationTick() + 1);
         }
 
@@ -142,15 +140,15 @@ public class EntityFarseer extends Entity implements IAnimatedEntity {
                 return 1;
             } else if (this.getAnimationTick() < 30) {
                 return 2;
-            } else if (this.getAnimationTick() > 40) {
+            } else if (this.getAnimationTick() > 40 && false) {
                 int i = 50 - this.getAnimationTick();
                 return i < 6 ? i < 3 ? 0 : 1 : 2;
-            } else {
-                return 3;
             }
         }
-        return 10;
+        return 40;
     }
+
+
 
     public float getPortalOpacity(float partialTicks) {
         if (this.getAnimation() == ANIMATION_EMERGE) {
