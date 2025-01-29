@@ -94,11 +94,16 @@ public class EntityFarseer extends Entity implements IAnimatedEntity {
     }
 
     public void tick() {
-        System.out.println(this.getAnimationTick());
 
         if (!this.hasEmerged()) {
             this.setAnimation(ANIMATION_EMERGE);
             this.setHasEmerged(true);
+        }
+
+        System.out.println(getAnimationTick());
+
+        if (this.hasEmerged() && getAnimation() == ANIMATION_EMERGE && this.getAnimationTick() < 40){
+            this.setAnimationTick(getAnimationTick() + 1);
         }
 
     }
