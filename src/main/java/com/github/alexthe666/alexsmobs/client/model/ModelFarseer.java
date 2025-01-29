@@ -216,7 +216,7 @@ public class ModelFarseer extends AdvancedEntityModel<EntityFarseer> {
     }
 
 
-    public void animate(IAnimatedEntity entity, float f, float f1, float f2, float f3, float f4) {
+    public void animate(IAnimatedEntity entity) {
         animator.update(entity);
         animator.setAnimation(EntityFarseer.ANIMATION_EMERGE);
         animator.startKeyframe(0);
@@ -304,6 +304,7 @@ public class ModelFarseer extends AdvancedEntityModel<EntityFarseer> {
     @Override
     public void setupAnim(EntityFarseer entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.resetToDefaultPose();
+        animate(entity);
     }
 
 

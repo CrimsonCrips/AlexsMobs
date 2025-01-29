@@ -94,10 +94,9 @@ public class EntityFarseer extends Entity implements IAnimatedEntity {
     }
 
     public void tick() {
-        System.out.println(this.getAnimation() == ANIMATION_EMERGE);
+        System.out.println(this.getAnimationTick());
 
         if (!this.hasEmerged()) {
-            System.out.println("I AM NOT EMERGED");
             this.setAnimation(ANIMATION_EMERGE);
             this.setHasEmerged(true);
         }
@@ -161,7 +160,7 @@ public class EntityFarseer extends Entity implements IAnimatedEntity {
 
 
     public boolean isEffectiveAi() {
-        return false;
+        return true;
     }
 
 }
