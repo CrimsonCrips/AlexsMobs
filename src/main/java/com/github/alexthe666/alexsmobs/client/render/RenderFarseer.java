@@ -55,34 +55,22 @@ public class RenderFarseer extends EntityRenderer<EntityFarseer> {
 
         matrixStackIn.pushPose();
 
-        if(entityIn.getAnimation() == EntityFarseer.ANIMATION_EMERGE){
-            matrixStackIn.pushPose();
-            matrixStackIn.scale(3.0F, 3.0F, 3.0F);
-            PoseStack.Pose posestack$pose = matrixStackIn.last();
-            Matrix4f matrix4f = posestack$pose.pose();
-            Matrix3f matrix3f = posestack$pose.normal();
-            int portalTexture = Mth.clamp(entityIn.getPortalFrame(), 0, PORTAL_TEXTURES.length - 1);
-            VertexConsumer portalStatic = AMRenderTypes.createMergedVertexConsumer(bufferIn.getBuffer(AMRenderTypes.STATIC_PORTAL), bufferIn.getBuffer(RenderType.entityTranslucent(PORTAL_TEXTURES[portalTexture])));
-            float portalAlpha =  entityIn.getPortalOpacity(partialTicks);
-            portalVertex(portalStatic, matrix4f, matrix3f, packedLightIn, 0.0F, 0, 0, 1, portalAlpha);
-            portalVertex(portalStatic, matrix4f, matrix3f, packedLightIn, 1.0F, 0, 1, 1, portalAlpha);
-            portalVertex(portalStatic, matrix4f, matrix3f, packedLightIn, 1.0F, 1, 1, 0, portalAlpha);
-            portalVertex(portalStatic, matrix4f, matrix3f, packedLightIn, 0.0F, 1, 0, 0, portalAlpha);
-            matrixStackIn.popPose();
-        }
-
-        if(true){
-            MODEL_FARSEER.setupAnim(entityIn,0,0,partialTicks,0,0);
-            matrixStackIn.translate(0.0D, (double)-0.15F, 0.0D);
-            matrixStackIn.mulPose(Axis.YP.rotationDegrees(Mth.lerp(partialTicks, entityIn.yRotO, entityIn.getYRot()) - 180F));
-            matrixStackIn.pushPose();
-            matrixStackIn.mulPose(Axis.XP.rotationDegrees(Mth.lerp(partialTicks, entityIn.xRotO, entityIn.getXRot())));
-            matrixStackIn.translate(0, 0.5F, 0);
-            matrixStackIn.scale(1F, 1F, 1F);
-            VertexConsumer ivertexbuilder = bufferIn.getBuffer(MODEL_FARSEER.renderType(TEXTURE));
-            MODEL_FARSEER.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-            matrixStackIn.popPose();
-        }
+        matrixStackIn.pushPose();
+        matrixStackIn.scale(3.0F, 3.0F, 3.0F);
+        PoseStack.Pose posestack$pose = matrixStackIn.last();
+        Matrix4f matrix4f = posestack$pose.pose();
+        Matrix3f matrix3f = posestack$pose.normal();
+        int portalTexture = Mth.clamp(entityIn.getPortalFrame(), 0, PORTAL_TEXTURES.length - 1);
+        VertexConsumer portalStatic = AMRenderTypes.createMergedVertexConsumer(bufferIn.getBuffer(AMRenderTypes.STATIC_PORTAL), bufferIn.getBuffer(RenderType.entityTranslucent(PORTAL_TEXTURES[portalTexture])));
+        float portalAlpha =  entityIn.getPortalOpacity(partialTicks);
+        portalVertex(portalStatic, matrix4f, matrix3f, packedLightIn, 0.0F, 0, 0, 1, portalAlpha);
+        portalVertex(portalStatic, matrix4f, matrix3f, packedLightIn, 1.0F, 0, 1, 1, portalAlpha);
+        portalVertex(portalStatic, matrix4f, matrix3f, packedLightIn, 1.0F, 1, 1, 0, portalAlpha);
+        portalVertex(portalStatic, matrix4f, matrix3f, packedLightIn, 0.0F, 1, 0, 0, portalAlpha);
+        matrixStackIn.popPose();
+        MODEL_FARSEER.setupAnim(entityIn,0,0,partialTicks,0,0);
+        VertexConsumer ivertexbuilder = bufferIn.getBuffer(MODEL_FARSEER.renderType(TEXTURE));
+        MODEL_FARSEER.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         matrixStackIn.popPose();
 
 

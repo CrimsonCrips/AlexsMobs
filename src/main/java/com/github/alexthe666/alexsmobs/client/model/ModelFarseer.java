@@ -153,12 +153,12 @@ public class ModelFarseer extends AdvancedEntityModel<EntityFarseer> {
         animator.move(rightArm2, -3, 5, 1);
         animator.endKeyframe();
         animator.startKeyframe(10);
+
         animator.move(root, 0, 0, 10);
         animator.rotate(leftArm, 0, Maths.rad(60), 0);
         animator.rotate(leftElbow, Maths.rad(-20), Maths.rad(-30), 0);
         animator.rotate(leftHand, Maths.rad(-15), Maths.rad(50), 0);
         animator.move(leftArm, 2, -5, 4);
-
         animator.rotate(rightArm2, 0, Maths.rad(-60), 0);
         animator.rotate(rightElbow2, Maths.rad(20), Maths.rad(50), 0);
         animator.rotate(rightHand2, Maths.rad(5), Maths.rad(-60), 0);
@@ -170,12 +170,36 @@ public class ModelFarseer extends AdvancedEntityModel<EntityFarseer> {
         animator.rotate(leftElbow, Maths.rad(-20), Maths.rad(-40), 0);
         animator.rotate(leftHand, Maths.rad(-15), Maths.rad(85), 0);
         animator.move(leftArm, 3, -5, 9);
-
         animator.rotate(rightArm2, 0, Maths.rad(-50), 0);
         animator.rotate(rightElbow2, Maths.rad(20), Maths.rad(50), 0);
         animator.rotate(rightHand2, Maths.rad(25), Maths.rad(-70), 0);
         animator.move(rightArm2, -5, 5, 11);
+
         animator.endKeyframe();
+        animator.startKeyframe(10);
+        animator.move(root, 0, 0, 10);
+        animator.rotate(leftArm, 0, Maths.rad(60), 0);
+        animator.rotate(leftElbow, Maths.rad(-20), Maths.rad(-30), 0);
+        animator.rotate(leftHand, Maths.rad(-15), Maths.rad(50), 0);
+        animator.move(leftArm, 2, -5, 4);
+        animator.rotate(rightArm2, 0, Maths.rad(-60), 0);
+        animator.rotate(rightElbow2, Maths.rad(20), Maths.rad(50), 0);
+        animator.rotate(rightHand2, Maths.rad(5), Maths.rad(-60), 0);
+        animator.move(rightArm2, -5, 5, 6);
+        animator.endKeyframe();
+        animator.startKeyframe(10);
+        animator.move(root, 0, 0, 5);
+        animator.rotate(leftArm, 0, Maths.rad(60), 0);
+        animator.rotate(leftElbow, Maths.rad(-20), Maths.rad(-40), 0);
+        animator.rotate(leftHand, Maths.rad(-15), Maths.rad(85), 0);
+        animator.move(leftArm, 3, -5, 9);
+        animator.rotate(rightArm2, 0, Maths.rad(-50), 0);
+        animator.rotate(rightElbow2, Maths.rad(20), Maths.rad(50), 0);
+        animator.rotate(rightHand2, Maths.rad(25), Maths.rad(-70), 0);
+        animator.move(rightArm2, -5, 5, 11);
+
+        animator.endKeyframe();
+
         animator.resetKeyframe(10);
     }
 

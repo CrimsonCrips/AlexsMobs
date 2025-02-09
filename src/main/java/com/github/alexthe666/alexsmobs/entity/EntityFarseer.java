@@ -51,7 +51,7 @@ import java.util.EnumSet;
 
 public class EntityFarseer extends Entity implements IAnimatedEntity {
 
-    public static final Animation ANIMATION_EMERGE = Animation.create(50);
+    public static final Animation ANIMATION_EMERGE = Animation.create(60);
     private static final EntityDataAccessor<Boolean> HAS_EMERGED = SynchedEntityData.defineId(EntityFarseer.class, EntityDataSerializers.BOOLEAN);
     private int animationTick;
     private Animation currentAnimation;
@@ -97,8 +97,6 @@ public class EntityFarseer extends Entity implements IAnimatedEntity {
             this.setAnimation(ANIMATION_EMERGE);
             this.setHasEmerged(true);
         }
-
-        System.out.println(getAnimationTick());
 
         if (getAnimation() == ANIMATION_EMERGE){
             if (this.hasEmerged() && this.getAnimationTick() < 50){
